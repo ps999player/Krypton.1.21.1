@@ -1,18 +1,23 @@
+// ==============================================
+// Build.gradle for Fabric 1.21.1 + Shadow 8.1.1
+// ==============================================
+
 buildscript {
     repositories {
-        maven { url = 'https://maven.fabricmc.net/' }
+        maven { url 'https://maven.fabricmc.net/' }
         mavenCentral()
-        gradlePluginPortal() // Add this to find the Shadow plugin
     }
     dependencies {
-        classpath "net.fabricmc:fabric-loom:1.9-SNAPSHOT"
-        classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:8.1.1"
+        classpath "net.fabricmc:fabric-loom:1.9.2" // Loom for Fabric
     }
 }
 
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
 apply plugin: 'fabric-loom'
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
 
 group = 'me.github.shurpe'
 version = '1.1'
@@ -30,7 +35,7 @@ dependencies {
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:0.16.8"
 
-    // HttpUtils class dependencies
+    // HTTP utils
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'org.apache.httpcomponents:httpcore:4.4.17'
     implementation 'com.google.code.gson:gson:2.10.1'
@@ -51,4 +56,9 @@ shadowJar {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+// Optional: Ensure shadow jar depends on build
+tasks.build {
+    dependsOn tasks.shadowJar
 }
