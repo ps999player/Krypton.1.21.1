@@ -1,50 +1,31 @@
-// ===== Buildscript for Fabric Loom =====
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabricmc.net/' }
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-    }
-    dependencies {
-        classpath 'net.fabricmc:fabric-loom:1.7.111' // Loom for MC 1.21.1
-    }
+plugins {
+    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-// ===== Apply Plugins =====
-apply plugin: 'fabric-loom'
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
-
-// ===== Project Info =====
 group = 'me.github.shurpe'
 version = '1.1'
-archivesBaseName = 'Krypton1.21.1'
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
-// ===== Repositories =====
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabricmc.net/' }
     maven { url 'https://jitpack.io' }
 }
 
-// ===== Dependencies =====
 dependencies {
-    // Minecraft and mappings
     minecraft 'com.mojang:minecraft:1.21.1'
     mappings loom.officialMojangMappings()
     modImplementation 'net.fabricmc:fabric-loader:0.16.6+build.10'
 
-    // Apache HttpClient (for HttpUtils.java)
+    // HttpUtils class dependencies
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'org.apache.httpcomponents:httpcore:4.4.17'
-
-    // Gson (required for Webhook.java)
     implementation 'com.google.code.gson:gson:2.10.1'
 }
 
-// ===== Loom Config =====
 loom {
     runs {
         client {
@@ -53,13 +34,11 @@ loom {
     }
 }
 
-// ===== ShadowJar Config =====
 shadowJar {
     archiveClassifier.set('all')
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-// ===== Java Compile Options =====
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
