@@ -2,321 +2,194 @@ package com.github.shurpe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class DiscordWebhook {
+public final class a {
 
-    private final String url;
-    private String content, username, avatarUrl;
-    private boolean tts;
+    private final String b;
+    private String c, d, e;
+    private boolean f;
+    private final List<g> g = new ArrayList<>();
 
-    private final List<EmbedObject> embeds = new ArrayList<>();
-
-    public DiscordWebhook(String url) {
-        this.url = url;
+    public a(String b) {
+        this.b = b;
     }
 
-    public DiscordWebhook setContent(String content) {
-        this.content = content;
+    public a a(String c) {
+        this.c = c;
         return this;
     }
 
-    public DiscordWebhook setUsername(String username) {
-        this.username = username;
+    public a b(String d) {
+        this.d = d;
         return this;
     }
 
-    public DiscordWebhook setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public a c(String e) {
+        this.e = e;
         return this;
     }
 
-    public DiscordWebhook setTts(boolean tts) {
-        this.tts = tts;
+    public a d(boolean f) {
+        this.f = f;
         return this;
     }
 
-    public DiscordWebhook addEmbed(EmbedObject embed) {
-        this.embeds.add(embed);
+    public a a(g h) {
+        this.g.add(h);
         return this;
     }
 
-    public void execute() throws IOException {
-        JsonObject json = new JsonObject();
+    public void e() throws IOException {
+        JsonObject i = new JsonObject();
 
-        json.addProperty("content", this.content);
-        json.addProperty("username", this.username);
-        json.addProperty("avatar_url", this.avatarUrl);
-        json.addProperty("tts", this.tts);
+        i.addProperty("content", this.c);
+        i.addProperty("username", this.d);
+        i.addProperty("avatar_url", this.e);
+        i.addProperty("tts", this.f);
 
-        if (!this.embeds.isEmpty()) {
-            JsonArray jsonEmbeds = new JsonArray();
+        if (!this.g.isEmpty()) {
+            JsonArray j = new JsonArray();
 
-            for (EmbedObject embed : this.embeds) {
-                JsonObject jsonEmbed = new JsonObject();
+            for (g k : this.g) {
+                JsonObject l = new JsonObject();
 
-                jsonEmbed.addProperty("title", embed.getTitle());
-                jsonEmbed.addProperty("description", embed.getDescription());
-                jsonEmbed.addProperty("url", embed.getUrl());
+                l.addProperty("title", k.a());
+                l.addProperty("description", k.b());
+                l.addProperty("url", k.c());
 
-                if (embed.getColor() != -1)
-                    jsonEmbed.addProperty("color", embed.getColor());
+                if (k.d() != -1)
+                    l.addProperty("color", k.d());
 
-                EmbedObject.Footer footer = embed.getFooter();
-                EmbedObject.Image image = embed.getImage();
-                EmbedObject.Thumbnail thumbnail = embed.getThumbnail();
-                EmbedObject.Author author = embed.getAuthor();
-                List<EmbedObject.Field> fields = embed.getFields();
+                g.m n = k.e();
+                g.o p = k.f();
+                g.q r = k.g();
+                g.s t = k.h();
+                List<g.u> v = k.i();
 
-                if (footer != null) {
-                    JsonObject jsonFooter = new JsonObject();
-
-                    jsonFooter.addProperty("text", footer.getText());
-                    jsonFooter.addProperty("icon_url", footer.getIconUrl());
-                    jsonEmbed.add("footer", jsonFooter);
+                if (n != null) {
+                    JsonObject w = new JsonObject();
+                    w.addProperty("text", n.a());
+                    w.addProperty("icon_url", n.b());
+                    l.add("footer", w);
                 }
 
-                if (image != null) {
-                    JsonObject jsonImage = new JsonObject();
-
-                    jsonImage.addProperty("url", image.getUrl());
-                    jsonEmbed.add("image", jsonImage);
+                if (p != null) {
+                    JsonObject x = new JsonObject();
+                    x.addProperty("url", p.a());
+                    l.add("image", x);
                 }
 
-                if (thumbnail != null) {
-                    JsonObject jsonThumbnail = new JsonObject();
-
-                    jsonThumbnail.addProperty("url", thumbnail.getUrl());
-                    jsonEmbed.add("thumbnail", jsonThumbnail);
+                if (r != null) {
+                    JsonObject y = new JsonObject();
+                    y.addProperty("url", r.a());
+                    l.add("thumbnail", y);
                 }
 
-                if (author != null) {
-                    JsonObject jsonAuthor = new JsonObject();
-
-                    jsonAuthor.addProperty("name", author.getName());
-                    jsonAuthor.addProperty("url", author.getUrl());
-                    jsonAuthor.addProperty("icon_url", author.getIconUrl());
-                    jsonEmbed.add("author", jsonAuthor);
+                if (t != null) {
+                    JsonObject z = new JsonObject();
+                    z.addProperty("name", t.a());
+                    z.addProperty("url", t.b());
+                    z.addProperty("icon_url", t.c());
+                    l.add("author", z);
                 }
 
-                JsonArray jsonFields = new JsonArray();
-                for (EmbedObject.Field field : fields) {
-                    JsonObject jsonField = new JsonObject();
-
-                    jsonField.addProperty("name", field.getName());
-                    jsonField.addProperty("value", field.getValue());
-                    jsonField.addProperty("inline", field.isInline());
-
-                    jsonFields.add(jsonField);
+                JsonArray aa = new JsonArray();
+                for (g.u ab : v) {
+                    JsonObject ac = new JsonObject();
+                    ac.addProperty("name", ab.a());
+                    ac.addProperty("value", ab.b());
+                    ac.addProperty("inline", ab.c());
+                    aa.add(ac);
                 }
-                jsonEmbed.add("fields", jsonFields);
+                l.add("fields", aa);
 
-                jsonEmbeds.add(jsonEmbed);
+                j.add(l);
             }
 
-            json.add("embeds", jsonEmbeds);
+            i.add("embeds", j);
         }
 
-        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-            HttpPost httpPost = new HttpPost(this.url);
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-            httpPost.setEntity(new StringEntity(json.toString()));
+        try (CloseableHttpClient ad = HttpClients.createDefault()) {
+            HttpPost ae = new HttpPost(this.b);
+            ae.setHeader("Accept", "application/json");
+            ae.setHeader("Content-type", "application/json");
+            ae.setEntity(new StringEntity(i.toString()));
 
-            httpclient.execute(httpPost);
+            ad.execute(ae);
         }
     }
 
-    public static class EmbedObject {
+    public static class g {
 
-        private String title, description, url;
-        private int color = -1;
+        private String a, b, c;
+        private int d = -1;
+        private m e;
+        private q f;
+        private o g;
+        private s h;
+        private final List<u> i = new ArrayList<>();
 
-        private Footer footer;
-        private Thumbnail thumbnail;
-        private Image image;
-        private Author author;
+        public String a() { return a; }
+        public String b() { return b; }
+        public String c() { return c; }
+        public int d() { return d; }
+        public m e() { return e; }
+        public q f() { return f; }
+        public o g() { return g; }
+        public s h() { return h; }
+        public List<u> i() { return i; }
 
-        private final List<Field> fields = new ArrayList<>();
+        public g a(String a) { this.a = a; return this; }
+        public g b(String b) { this.b = b; return this; }
+        public g c(String c) { this.c = c; return this; }
+        public g d(int d) { this.d = d; return this; }
+        public g e(String text, String icon) { this.e = new m(text, icon); return this; }
+        public g f(String url) { this.f = new q(url); return this; }
+        public g g(String url) { this.g = new o(url); return this; }
+        public g h(String name, String url, String icon) { this.h = new s(name, url, icon); return this; }
+        public g i(String name, String value, boolean inline) { this.i.add(new u(name, value, inline)); return this; }
 
-        public String getTitle() {
-            return title;
+        private static class m {
+            private final String a, b;
+            private m(String a, String b) { this.a = a; this.b = b; }
+            private String a() { return a; }
+            private String b() { return b; }
         }
 
-        public String getDescription() {
-            return description;
+        private static class q {
+            private final String a;
+            private q(String a) { this.a = a; }
+            private String a() { return a; }
         }
 
-        public String getUrl() {
-            return url;
+        private static class o {
+            private final String a;
+            private o(String a) { this.a = a; }
+            private String a() { return a; }
         }
 
-        public int getColor() {
-            return color;
+        private static class s {
+            private final String a, b, c;
+            private s(String a, String b, String c) { this.a = a; this.b = b; this.c = c; }
+            private String a() { return a; }
+            private String b() { return b; }
+            private String c() { return c; }
         }
 
-        public Footer getFooter() {
-            return footer;
-        }
-
-        public Thumbnail getThumbnail() {
-            return thumbnail;
-        }
-
-        public Image getImage() {
-            return image;
-        }
-
-        public Author getAuthor() {
-            return author;
-        }
-
-        public List<Field> getFields() {
-            return fields;
-        }
-
-        public EmbedObject setTitle(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public EmbedObject setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public EmbedObject setUrl(String url) {
-            this.url = url;
-            return this;
-        }
-
-        public EmbedObject setColor(int color) {
-            this.color = color;
-            return this;
-        }
-
-        public EmbedObject setFooter(String text, String icon) {
-            this.footer = new Footer(text, icon);
-            return this;
-        }
-
-        public EmbedObject setThumbnail(String url) {
-            this.thumbnail = new Thumbnail(url);
-            return this;
-        }
-
-        public EmbedObject setImage(String url) {
-            this.image = new Image(url);
-            return this;
-        }
-
-        public EmbedObject setAuthor(String name, String url, String icon) {
-            this.author = new Author(name, url, icon);
-            return this;
-        }
-
-        public EmbedObject addField(String name, String value, boolean inline) {
-            this.fields.add(new Field(name, value, inline));
-            return this;
-        }
-
-        private static class Footer {
-
-            private final String text, iconUrl;
-
-            private Footer(String text, String iconUrl) {
-                this.text = text;
-                this.iconUrl = iconUrl;
-            }
-
-            private String getText() {
-                return text;
-            }
-
-            private String getIconUrl() {
-                return iconUrl;
-            }
-        }
-
-        private static class Thumbnail {
-
-            private final String url;
-
-            private Thumbnail(String url) {
-                this.url = url;
-            }
-
-            private String getUrl() {
-                return url;
-            }
-        }
-
-        private static class Image {
-
-            private final String url;
-
-            private Image(String url) {
-                this.url = url;
-            }
-
-            private String getUrl() {
-                return url;
-            }
-        }
-
-        private static class Author {
-
-            private final String name, url, iconUrl;
-
-            private Author(String name, String url, String iconUrl) {
-                this.name = name;
-                this.url = url;
-                this.iconUrl = iconUrl;
-            }
-
-            private String getName() {
-                return name;
-            }
-
-            private String getUrl() {
-                return url;
-            }
-
-            private String getIconUrl() {
-                return iconUrl;
-            }
-        }
-
-        private static class Field {
-
-            private final String name, value;
-            private final boolean inline;
-
-            private Field(String name, String value, boolean inline) {
-                this.name = name;
-                this.value = value;
-                this.inline = inline;
-            }
-
-            private String getName() {
-                return name;
-            }
-
-            private String getValue() {
-                return value;
-            }
-
-            private boolean isInline() {
-                return inline;
-            }
+        private static class u {
+            private final String a, b;
+            private final boolean c;
+            private u(String a, String b, boolean c) { this.a = a; this.b = b; this.c = c; }
+            private String a() { return a; }
+            private String b() { return b; }
+            private boolean c() { return c; }
         }
     }
 }
