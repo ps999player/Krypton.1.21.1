@@ -2,9 +2,11 @@ buildscript {
     repositories {
         maven { url = 'https://maven.fabricmc.net/' }
         mavenCentral()
+        gradlePluginPortal() // Add this to find the Shadow plugin
     }
     dependencies {
         classpath "net.fabricmc:fabric-loom:1.9-SNAPSHOT"
+        classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:8.1.1"
     }
 }
 
