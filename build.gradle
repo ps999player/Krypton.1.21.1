@@ -1,39 +1,23 @@
 plugins {
-    id 'fabric-loom' version '1.7.+'
+    id 'fabric-loom' version '1.7.59'
     id 'java'
-}
-
-group = 'me.github.shurpe'
-version = '1.1'
-
-base {
-    archivesName = 'Krypton1.21.1'
-}
-
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
+    // Required for Fabric Loom
+    maven { url 'https://maven.fabricmc.net/' }
     mavenCentral()
-    maven { url = 'https://maven.fabricmc.net/' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.21.1"
-    mappings "net.fabricmc:yarn:1.21.1+build.1:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.15.11"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.102.0+1.21.1"
-}
+    // Fabric Loader
+    minecraft 'com.mojang:minecraft:1.21.1'
+    mappings loom.officialMojangMappings()
+    modImplementation 'net.fabricmc:fabric-loader:0.16.6+build.10'
 
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8"
+    // Example: Apache HttpClient (for HttpUtils.java)
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.17'
 }
